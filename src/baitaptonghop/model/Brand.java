@@ -12,6 +12,10 @@ public class Brand extends RootModel{
         this.brandName = brandName;
     }
 
+    public Brand(String color) {
+        this.brandName = color;
+    }
+
     @Override
     public String toString() {
         return "Brand{" +

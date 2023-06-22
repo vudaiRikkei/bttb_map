@@ -13,18 +13,18 @@ public class ColorService implements IBaseService<Color> {
             map.put(color.getColorName(), 0);
         }
 
-        for (Product product: products) {
-            String key = product.getColor().getColorName();
-            int value = map.get(key) + 1;
-            map.put(key, value);
-        }
-//        for (Map.Entry<String,Integer> entry: map.entrySet()) {
-//            for (Product p:products) {
-//                if(entry.getKey().equals(p.getColor().getColorName())) {
-//                    entry.setValue(entry.getValue() + 1);
-//                }
-//            }
+//        for (Product product: products) {
+//            String key = product.getColor().getColorName();
+//            int value = map.get(key) + 1;
+//            map.put(key, value);
 //        }
+        for (Map.Entry<String,Integer> entry: map.entrySet()) {
+            for (Product p:products) {
+                if(entry.getKey().equals(p.getColor().getColorName())) {
+                    entry.setValue(entry.getValue() + 1);
+                }
+            }
+        }
         return map;
     }
 
@@ -39,8 +39,8 @@ public class ColorService implements IBaseService<Color> {
     }
 
     @Override
-    public boolean deleteById(List<Color> colors, int id) {
-        return IBaseService.super.deleteById(colors, id);
+    public boolean deleteById(List<Color> colors, int id,List<Product> products) {
+        return IBaseService.super.deleteById(colors, id,products);
     }
 
     @Override

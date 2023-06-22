@@ -7,22 +7,22 @@ import baitaptonghop.model.RootModel;
 import java.util.List;
 import java.util.Map;
 
-public interface IBaseService<E extends RootModel>{
+public interface IBaseService<E extends RootModel> {
 
-    Map<String, Integer> atributeWithPrd(List<Color> colors, List<Product> products);
+    Map<String, Integer> atributeWithPrd(List<E> colors, List<Product> products);
 
-    default boolean save(List<E> eList, E e){
+    default boolean save(List<E> eList, E e) {
         if (e == null) {
             return false;
         }
-        if (e.getId() != 0){
+        if (e.getId() != 0) {
             for (int i = 0; i < eList.size(); i++) {
-                if (eList.get(i).getId() == e.getId()){
+                if (eList.get(i).getId() == e.getId()) {
                     eList.set(i, e);
                     return true;
                 }
             }
-        }else {
+        } else {
             e.setId(idAutoIncrement(eList));
             eList.add(e);
             return true;
@@ -30,36 +30,46 @@ public interface IBaseService<E extends RootModel>{
         return false;
     }
 
-    default E findById(List<E> eList, int id){
-        for (E element: eList) {
-            if (element.getId() == id){
+    default E findById(List<E> eList, int id) {
+        for (E element : eList) {
+            if (element.getId() == id) {
                 return element;
             }
         }
         return null;
     }
 
-    default boolean deleteById(List<E> eList, int id){
-        for (E element: eList) {
-            if (element.getId() == id){
-                eList.remove(element);
-                return true;
+    default boolean deleteById(List<E> eList, int id, List<Product> products) {
+        for (E element : eList) {
+            if (element.getId() == id) {
+                if (checkProduct(element, products)) {
+                    eList.remove(element);
+                    return true;
+                }
             }
         }
         return false;
     }
 
+    default boolean checkProduct(E element, List<Product> products) {
+        for (Product p : products) {
+            if (p.getId() == element.getId()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    default Integer idAutoIncrement(List<E> eList){
+
+    default Integer idAutoIncrement(List<E> eList) {
         int idMax = 0;
         for (int i = 0; i < eList.size(); i++) {
-            if (eList.get(i).getId() > idMax){
+            if (eList.get(i).getId() > idMax) {
                 idMax = eList.get(i).getId();
             }
         }
         return idMax + 1;
     }
-
 
 
 }
