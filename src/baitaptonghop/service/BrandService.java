@@ -16,12 +16,6 @@ public class BrandService implements IBaseService<Brand> {
         for (Brand color: colors) {
             map.put(color.getBrandName(), 0);
         }
-
-//        for (Product product: products) {
-//            String key = product.getBrand().getBrandName();
-//            int value = map.get(key) + 1;
-//            map.put(key, value);
-//        }
         for (Map.Entry<String,Integer> entry: map.entrySet()) {
             for (Product p:products) {
                 if(entry.getKey().equals(p.getBrand().getBrandName())) {

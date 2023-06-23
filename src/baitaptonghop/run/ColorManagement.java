@@ -11,16 +11,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class ColorManagement {
-    private static List<Color> colorList = Data.color;
+    private List<Color> colorList = Data.color;
 
-    private static ColorService colorService = new ColorService();
+    private ColorService colorService = new ColorService();
 
-    private static List<Product > products = Data.product_data;
+    private List<Product > products = Data.product_data;
 
-    public static void main(String[] args) {
-        colorList.add(new Color(1, "xanh lá"));
-        products.add(new Product(1, "prd name", 15.5, 15, null, new Color(1, "xanh lá"), null));
-
+    public ColorManagement() {
         int choice;
         while (true){
             show();
@@ -36,12 +33,14 @@ public class ColorManagement {
                     break;
                 case 3: delete();
                     break;
-                case 4:return;
+                case 4:
+                    return;
             }
         }
     }
 
-    static void createColor(){
+
+    void createColor(){
         System.out.println("nhập màu: ");
         String color = Config.getString();
         Color color1 = new Color(color);
@@ -51,7 +50,7 @@ public class ColorManagement {
         }else System.out.println("lưu thất bại");
     }
 
-    static void edit(){
+    void edit(){
         System.out.println("nhập id màu muốn sửa: ");
         int id = Config.getInteger();
         Color color = colorService.findById(colorList, id);
@@ -65,7 +64,7 @@ public class ColorManagement {
         }
     }
 
-    static void delete(){
+     void delete(){
         System.out.println("nhập id màu muốn xóa: ");
         int id = Config.getInteger();
         boolean check = colorService.deleteById(colorList, id,products);
@@ -74,7 +73,7 @@ public class ColorManagement {
         }else System.out.println("xóa thất bại");
     }
 
-    static void show(){
+     void show(){
         Map<String, Integer> map = colorService.atributeWithPrd(colorList, Data.product_data);
         Set<String> strings = map.keySet();
         for (String str: strings) {

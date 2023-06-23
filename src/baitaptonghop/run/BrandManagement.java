@@ -13,16 +13,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class BrandManagement {
-    private static List<Brand> colorList = Data.brand_data;
+    private List<Brand> brandList = Data.brand_data;
 
-    private static BrandService brandService = new BrandService();
+    private BrandService brandService = new BrandService();
 
-    private static List<Product> products = Data.product_data;
+    private List<Product> products = Data.product_data;
 
-    public static void main(String[] args) {
-        colorList.add(new Brand(1, "GUCCI"));
-        products.add(new Product(1, "prd name", 15.5, 15, colorList.get(0), new Color(1, "xanh lá"), null));
-
+    public BrandManagement() {
         int choice;
         while (true){
             show();
@@ -38,46 +35,47 @@ public class BrandManagement {
                     break;
                 case 3: delete();
                     break;
-                case 4:return;
+                case 4:
+                    return;
             }
         }
     }
 
-    static void createColor(){
+     void createColor(){
         System.out.println("nhập brand: ");
         String color = Config.getString();
         Brand color1 = new Brand(color);
-        boolean check = brandService.save(colorList, color1);
+        boolean check = brandService.save(brandList, color1);
         if (check){
             System.out.println("lưu thành công");
         }else System.out.println("lưu thất bại");
     }
 
-    static void edit(){
+     void edit(){
         System.out.println("nhập id brand muốn sửa: ");
         int id = Config.getInteger();
-        Brand color = brandService.findById(colorList, id);
+        Brand color = brandService.findById(brandList, id);
         if (color == null){
             System.out.println("không tìm thấy brand này ");
         }else {
             System.out.println("nhaafp tên brand mới: ");
             String colorStr = Config.getString();
             color.setBrandName(colorStr);
-            brandService.save(colorList, color);
+            brandService.save(brandList, color);
         }
     }
 
-    static void delete(){
+     void delete(){
         System.out.println("nhập id brand muốn xóa: ");
         int id = Config.getInteger();
-        boolean check = brandService.deleteById(colorList,id,products);
+        boolean check = brandService.deleteById(brandList,id,products);
         if (check){
             System.out.println(" xóa thành công");
         }else System.out.println("xóa thất bại");
     }
 
-    static void show(){
-        Map<String, Integer> map = brandService.atributeWithPrd(colorList, Data.product_data);
+     void show(){
+        Map<String, Integer> map = brandService.atributeWithPrd(brandList, Data.product_data);
         Set<String> strings = map.keySet();
         for (String str: strings) {
             System.out.println(str + ": " + map.get(str) + " sản phẩm");

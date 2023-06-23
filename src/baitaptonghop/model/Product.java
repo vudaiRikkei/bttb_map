@@ -1,7 +1,6 @@
 package baitaptonghop.model;
 
-public class Product {
-    private int id;
+public class Product extends RootModel{
 
     private String prdName;
 
